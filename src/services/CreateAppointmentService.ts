@@ -1,4 +1,5 @@
 import Appointment from '../models/Appointment';
+import { getCustomRepository } from 'typeorm'
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import {startOfHour} from 'date-fns';
 
@@ -8,27 +9,27 @@ interface request{
 }
 
 class CreateAppointmentService{ 
-    private appoitmentsRepository: AppointmentsRepository
 
-    constructor(appoitmentsRepository: AppointmentsRepository ){
-        this.appoitmentsRepository = appoitmentsRepository
+    public async execute({date, provider }: request): Promise<Appointment> {
+        const appoitmentsRepository = getCustomRepository(AppointmentsRepository)
 
-    }
-
-    public execute({date, provider }: request): Appointment {
         const appointmentDate = startOfHour(date);
     
     
-   const comparaDuasDatas = this.appoitmentsRepository.findByDate(appointmentDate);
+   const comparaDuasDatas = await appoitmentsRepository.findByDate(appointmentDate);
 
     if (comparaDuasDatas){
         throw Error('horário  marcado');
     }
 
-    const appointment = this.appoitmentsRepository.create({
+
+    const appointment = appoitmentsRepository.create({
         date: appointmentDate,
         provider,
     });
+
+    //salva no banco de dados
+    await appoitmentsRepository.save(appointment);
 
     return appointment;
 
