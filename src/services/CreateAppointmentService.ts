@@ -4,13 +4,13 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import {startOfHour} from 'date-fns';
 
 interface request{
-    provider:string ;
+    provider_id:string ;
     date: Date;
 }
 
 class CreateAppointmentService{ 
 
-    public async execute({date, provider }: request): Promise<Appointment> {
+    public async execute({date, provider_id }: request): Promise<Appointment> {
         const appoitmentsRepository = getCustomRepository(AppointmentsRepository)
 
         const appointmentDate = startOfHour(date);
@@ -25,7 +25,7 @@ class CreateAppointmentService{
 
     const appointment = appoitmentsRepository.create({
         date: appointmentDate,
-        provider,
+        provider_id,
     });
 
     //salva no banco de dados

@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export default class CreateAppointmenta1600445805757 implements MigrationInterface {
+export default class createUsers1600858081101 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:'appointments', 
+                name:'users', 
                 columns:[
                     {
                         name: 'id', 
@@ -16,12 +16,18 @@ export default class CreateAppointmenta1600445805757 implements MigrationInterfa
 
                     },
                     {
-                        name: 'provider', 
-                        type: 'varchar',                     
+                        name: 'name', 
+                        type: 'varchar',
+                        
                     },
                     {
-                        name: 'date', 
-                        type: 'timestamp with time zone',
+                        name: 'email', 
+                        type: 'varchar',
+                        isUnique: true,
+                    },
+                    {
+                        name: 'password', 
+                        type: 'varchar',
                         
                     },
                     {
@@ -30,16 +36,18 @@ export default class CreateAppointmenta1600445805757 implements MigrationInterfa
                         default: 'now()'          
                     },
                     {
-                        name : "update_at",
+                        name: "update_at",
                         type: 'timestamp',
                         default: 'now()'          
-                    }, 
+                    },  
+
                 ],
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('appointments');
+        await queryRunner.dropTable('users');
     }
+
 }
