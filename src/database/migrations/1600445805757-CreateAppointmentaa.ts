@@ -1,11 +1,11 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export default class createUsers1600858081101 implements MigrationInterface {
+export default class CreateAppointmenta1600445805757 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:'users', 
+                name:'appointments', 
                 columns:[
                     {
                         name: 'id', 
@@ -16,18 +16,12 @@ export default class createUsers1600858081101 implements MigrationInterface {
 
                     },
                     {
-                        name: 'name', 
-                        type: 'varchar',
-                        
+                        name: 'provider', 
+                        type: 'varchar',                     
                     },
                     {
-                        name: 'email', 
-                        type: 'varchar',
-                        isUnique: true,
-                    },
-                    {
-                        name: 'password', 
-                        type: 'varchar',
+                        name: 'date', 
+                        type: 'timestamp with time zone',
                         
                     },
                     {
@@ -36,18 +30,16 @@ export default class createUsers1600858081101 implements MigrationInterface {
                         default: 'now()'          
                     },
                     {
-                        name: "update_at",
+                        name : "updated_at",
                         type: 'timestamp',
                         default: 'now()'          
-                    },  
-
+                    }, 
                 ],
             }),
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('users');
+        await queryRunner.dropTable('appointments');
     }
-
 }
