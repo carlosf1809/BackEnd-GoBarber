@@ -1,6 +1,7 @@
 import {getRepository} from 'typeorm'
 import { hash  } from 'bcryptjs'
 
+import AppError from '../erros/AppErro';
 import User from '../models/User'
 
 interface Request {
@@ -17,7 +18,7 @@ class CreateUserService{
             where: {email},
         });
         if (checkUsersExists){
-            throw new Error('email ja existente');
+            throw new AppError('email ja existente');
         }
 
 

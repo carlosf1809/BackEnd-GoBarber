@@ -2,6 +2,7 @@ import {getRepository} from 'typeorm'
 import {compare} from 'bcryptjs'
 import { sign  } from 'jsonwebtoken' 
 
+import AppError from '../erros/AppErro';
 import User from '../models/User'
 import authConfig from '../config/auth'
 
@@ -25,7 +26,7 @@ class AuthenticateUserService{
         const user = await usersRespository.findOne({where: { email }});
 
         if (!user){
-            throw new Error('Email ou senha incorreto');
+            throw new AppError('Email ou senha incorreto', 401);
         }
 
         // user.password - Senha criptografada
@@ -36,7 +37,7 @@ class AuthenticateUserService{
         const passwordMatched = await compare(password, user.password);
 
         if(!passwordMatched){
-            throw new Error('Email ou senha incorreto');
+            throw new AppError('Email ou senha incorreto', 401);
         }
 
 

@@ -2,6 +2,7 @@ import Appointment from '../models/Appointment';
 import { getCustomRepository } from 'typeorm'
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import {startOfHour} from 'date-fns';
+import AppError from '../erros/AppErro';
 
 interface request{
     provider_id:string ;
@@ -19,7 +20,7 @@ class CreateAppointmentService{
    const comparaDuasDatas = await appoitmentsRepository.findByDate(appointmentDate);
 
     if (comparaDuasDatas){
-        throw Error('horário  marcado');
+        throw new AppError('horário  marcado');
     }
 
 
