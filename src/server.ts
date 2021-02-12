@@ -1,14 +1,17 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 
 import express, {Request, Response, NextFunction} from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import routes from './routes';
 import AppError from './erros/AppErro';
 import uploadConfig from './config/upload'
 
 import './database'
+import { useContainer } from 'typeorm';
 
 const app = express();
+app.use(cors())
 app.use('/files', express.static(uploadConfig.directory))
 app.use(express.json());
 app.use(routes);
